@@ -1,0 +1,170 @@
+<!doctype html>
+<!-- Developed By HEALTHCARD -->
+<html lang='en'>
+<head>
+<title>ID Card Generator</title>
+<meta charset='utf-8' name="HEALTHCARD's ID Card Generator" content='ID Gen'/> 
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+</head>
+<body>
+
+<div class='container'>
+	
+<h1>Download your health card</h1>
+<p>
+<canvas id='new' width='500' height='240' style='border:1px solid #000;'>
+</canvas>
+</p>
+<p>Click on the button to save your ID:
+
+    <button id='sav' type="button" class="btn btn-default btn-sm" onClick=save(); disabled>
+    <span class="glyphicon glyphicon-floppy-disk"></span> Save my ID
+    </button><a href="" id="download" download="HEALTHCARD_id.jpeg"></a>
+</p> 
+<h3>Please Enter Your Detalis to Update!</h3><p/>
+<input type='text' id='srava' placeholder='Enter Your Name!' required/><p>
+<input type='text' id='desig' placeholder='Enter Your Designation!' / >
+</p>
+
+Please Upload Your Image :
+	<input type='file' id='imagefile' onChange="PreviewImage();"/>
+	<img id="uploadPreview" style="width: 50px; height: 50px;" />
+	
+<p>
+<input type='button' id='upd' value='Update!' onClick=gene();>
+<input type='button' id='res' value='Reset' onClick=rese();>
+
+</div>
+</body>
+
+
+<script>
+
+var c=document.getElementById('new')
+var co=c.getContext('2d')
+
+function save(){
+datau=c.toDataURL('image/jpeg;base64;')//.replace("image/png", "image/octet-stream");
+//window.location.href=datau
+anchor=document.getElementById('download')
+anchor.href=datau
+anchor.innerHTML='Download'
+}
+
+function gene(){
+sra=document.getElementById('srava').value
+des=document.getElementById('desig').value
+if (sra.length||des.length>0) 
+{
+r=confirm("Do you want to Update "+sra+" and your Designation is "+des)
+if(r==true){
+c=document.getElementById('new')
+co=c.getContext('2d')
+co.clearRect(0,0,320,240)
+init()
+co.font='25px Arial'
+co.strokeText(sra,20,140)
+
+idnu=Math.random()*10000
+co.font='15px Arial'
+co.fillStyle='#000000'
+co.fillText('ID:'+Math.round(idnu),200,100)
+
+co.font='16px Arial'
+co.fillStyle='#000000'
+co.fillText(des,20,170)
+
+youphot=document.getElementById('uploadPreview')
+co.drawImage(youphot,180,110,100,100)
+document.getElementById('sav').disabled=false
+
+}else {
+document.write('You have cancelled the update!')
+}
+}else{alert('Please Enter your Details') }
+}
+
+function init(){
+
+grs=co.createLinearGradient(150,243,170,75)
+grs.addColorStop(1,'#ffddff')
+grs.addColorStop(0,'white')
+co.fillStyle=grs
+co.fillRect(0.5,75.5,319,164.5)
+
+gr=co.createLinearGradient(150,243,170,75)
+gr.addColorStop(1,'#7788ee')
+gr.addColorStop(0,'white')
+co.fillStyle=gr
+co.fillRect(0,0,300,73.5)
+
+grd=co.createLinearGradient(150,143,170,75)
+grd.addColorStop(1,'#7788ee')
+grd.addColorStop(0,'white')
+co.fillStyle=grd
+co.fillRect(150,0,169.5,73.5)
+
+co.arc(117.5,30,25,0,2*Math.PI)
+co.fillStyle='white'
+co.fill()
+
+co.moveTo(0,75)
+co.lineTo(320,75)
+co.stroke()
+
+co.font='25px Arial'
+co.fillText('HELATHCARD',10,40)
+
+co.beginPath()
+co.arc(110,40,10,0,2*Math.PI)
+co.stroke()
+
+co.beginPath()
+co.arc(125,40,10,0,2*Math.PI)
+co.stroke()
+
+co.font='11px Verdana'
+co.fillText('Developed by HEALTHCARD INDIA',300,40)
+
+co.beginPath()
+co.arc(117.5,27,10,0,2*Math.PI)
+co.stroke()
+
+co.fillStyle="#FFFF00"
+co.strokeRect(180,110,100,100)
+
+}
+
+
+init()
+
+function first(){
+co.font='25px Arial'
+co.strokeText('Your Name',20,140)
+
+
+co.font='16px Arial'
+co.fillStyle='#000000'
+co.fillText('Whatever you want', 10,170)
+
+co.font='15px Arial'
+co.fillStyle='#000000'
+co.fillText('ID:XXXX',200,100)
+}
+first()
+function PreviewImage() {
+        var prr = new FileReader();
+        prr.readAsDataURL(document.getElementById("imagefile").files[0]);
+
+        prr.onload = function (ev) {
+            document.getElementById("uploadPreview").src = ev.target.result;
+        };
+    };
+
+function rese(){
+init()
+first()
+}
+</script>
+</html>
